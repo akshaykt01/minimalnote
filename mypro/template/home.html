@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        {% load static %}
+
+    <meta charset="UTF-8">
+    <title>Todo</title>
+      <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <link href="{% static 'home/style.css' %}" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+<body>
+<div>
+    <style>
+        nav.fixed-top {
+  position: relative;
+
+    </style>
+        <nav class="navbar navbar-expand-lg bg-secondary text-uppercase fixed-top" id="mainNav" >
+            <div class="container">
+                <a class="navbar-brand" href="manage">TO DO</a>
+                <button class="navbar-toggler text-uppercase font-weight-bold bg-primary text-white rounded" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+                    Menu
+                    <i class="fas fa-bars"></i>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarResponsive">
+                    <ul class="navbar-nav ms-auto">
+                        <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded" href="logout">Logout</a></li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+
+</div>
+<div class="row d-flex justify-content-center container">
+    <div class="col-md-8">
+      <div class="card-hover-shadow-2x mb-3 card">
+        <div class="card-header-tab card-header">
+          <div class="card-header-title font-size-lg text-capitalize font-weight-normal"><i
+              class="fa fa-tasks"></i>&nbsp;Task Lists</div>
+
+        </div>
+
+<div >
+
+
+  <table border="2" class="table table-hover">
+    <th>task</th>
+    <th>Details</th>
+    <th>status</th>
+    <th>action</th>
+
+    <form action='add' method="POST">
+                  {% csrf_token %}
+                  <div class="col-md-12">
+                                <input class="form-control" type="title" name="n1" placeholder="title" required>
+                            </div>
+                            <div class="col-md-12">
+                                <textarea class="form-control" type="text" name="n2" placeholder="details"></textarea>
+                            </div>
+                            <input type="submit" class="btn btn-default " value="submit">
+
+
+    </form>
+
+
+  <form action='update' method="POST">
+    {% csrf_token %}
+            {% for i in r %}
+
+    <tr>
+
+      <td><input type="text" value="{{i.title}}" name="n1"></td>
+
+      <td><input type="text" value="{{i.description}}" name="n2"   ></td>
+
+      <td>{{i.status}}</td>
+          <td><input type="submit" class="btn btn-default " value="update"></td>
+
+    {% endfor %}
+  </form>
+
+        <td>
+                        <form action='completed' method="POST">
+                          {% csrf_token %}
+                          <div class="form-group">
+                            <input type="text" value="{{i.title}}" name="n" hidden="" >
+                            <input type="submit" class="btn btn-default " value=" mark as completed">
+                          </div>
+                        </form>
+
+                          <form action='remove' method="POST">
+                              {% csrf_token %}
+                                         <div class="form-group">
+                                <input type="text" value="{{i.title}}" name="n" hidden="" >
+                                <input type="submit" class="btn btn-default " value="Delete task">
+                              </div>
+
+                          </form>
+        </td>
+    </tr>
+
+
+  </table>
+
+    </div>
+    </div>
+</body>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+</html>
